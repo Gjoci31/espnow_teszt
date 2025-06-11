@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ESP8266 Konfiguráció és Parancsok</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; background: #f0f0f0; }
+    input, button { padding: 0.5em; margin: 0.5em 0; width: 100%; }
+    label { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>ESP8266 Konfiguráció</h1>
+  <form action="/save" method="GET">
+    <label>Saját MAC cím:</label>
+    <input type="text" name="self" placeholder="24:6F:28:XX:XX:XX">
+
+    <label>Controller MAC (csak tag):</label>
+    <input type="text" name="ctrl" placeholder="24:6F:28:YY:YY:YY">
+
+    <label>WiFi csatorna:</label>
+    <input type="number" name="ch" min="1" max="13" value="1">
+
+    <button type="submit">Mentés</button>
+  </form>
+
+  <h2>LED teszt / Parancskiadás</h2>
+  <form action="/cmd" method="GET">
+    <label>Címzett MAC:</label>
+    <input type="text" name="mac" placeholder="24:6F:28:ZZ:ZZ:ZZ">
+    <label>LED Szín (R,G,B):</label>
+    <input type="text" name="rgb" placeholder="FF0000">
+    <button type="submit">Küldés LED parancs</button>
+  </form>
+
+  <h2>Szenzor olvasás</h2>
+  <form action="/read_sensor" method="GET">
+    <label>Tag MAC:</label>
+    <input type="text" name="mac" placeholder="24:6F:28:ZZ:ZZ:ZZ">
+    <button type="submit">Olvasás</button>
+  </form>
+</body>
+</html>
