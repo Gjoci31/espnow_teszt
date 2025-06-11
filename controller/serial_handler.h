@@ -39,9 +39,18 @@ void handleSerialCommand() {
 }
 
 void processCommand(uint8_t* cmdData, uint8_t len) {
+  if (len == 0) return;
   uint8_t cmd = cmdData[0];
-  else {
-    Serial.print("Ismeretlen parancs: 0x");
-    Serial.println(cmd, HEX);
+
+  // A soros protokoll részletei még nincsenek kidolgozva.
+  // Egyelőre csak naplózzuk a beérkező parancsot.
+  Serial.print("Soros parancs (0x");
+  Serial.print(cmd, HEX);
+  Serial.print("):");
+  for (uint8_t i = 1; i < len; i++) {
+    Serial.print(' ');
+    if (cmdData[i] < 0x10) Serial.print('0');
+    Serial.print(cmdData[i], HEX);
   }
+  Serial.println();
 }

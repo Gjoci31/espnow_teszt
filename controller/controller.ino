@@ -4,6 +4,7 @@
 #include "config_mode.h"
 #include "web_handlers.h"
 #include "serial_handler.h"
+#include "utils.h"
 
 #define CONFIG_MODE_PIN D3
 #define NUM_TAGS 16
@@ -54,4 +55,20 @@ void loop() {
 void sendToTag(int index) {
   uint8_t data[8] = {0x01, 0xFF, 0x00, 0x00, 0, 0, 0, 0};
   esp_now_send(tagMacs[index], data, sizeof(data));
+}
+
+void onDataRecv(uint8_t* mac, uint8_t* data, uint8_t len) {
+  Serial.print("ESP-NOW adat érkezett ");
+  printMac(mac);
+  Serial.print(": ");
+  for (uint8_t i = 0; i < len; i++) {
+    if (data[i] < 0x10) Serial.print("0");
+    Serial.print(data[i], HEX);
+    Serial.print(" ");
+  }
+  Serial.println();
+}
+
+void checkIncomingESP() {
+  esp_now_register_recv_cb(onDataRecv);
 }
